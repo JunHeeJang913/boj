@@ -1,8 +1,10 @@
 #include <iostream>
 #define INF 987654321
+
+using namespace std;
 //더 작은 문제..!
 //더 작은 수를 나누는 횟수..!
-
+/*
 int min(int a, int b, int c){
     if(a<0) a=INF;
     if(b<0) b=INF;
@@ -25,13 +27,30 @@ int cnt_of_cal(int n){
     int cnt=min(cnt1,cnt2,cnt3);
 
     return cnt;
+}*/
+
+int cache[1000001]={0,};
+
+int cnt_of_cal(int n){
+    
+    for(int i = 2; i<=n;i++){
+        cache[i] = cache[i-1]+1;
+        if(i%2 == 0)
+            cache[i] = min(cache[i] , cache[i/2]+1);
+        if(i%3==0)
+            cache[i] = min(cache[i], cache[i/3]+1);
+    }
+
+    return cache[n];
 }
 
 int main(void){
     int n;
-    std::cin>>n;
-    std::cout<<cnt_of_cal(n);
+    cin>>n;
+    cache[1]=0;
+    cout<<cnt_of_cal(n);
     return 0;
 }
+
 
 //중복된 연산이 발생하면서 시간 초과
