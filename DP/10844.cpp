@@ -31,7 +31,7 @@ int lookForStair(int n){
     int numOfStair=0;
 
     for(int i=0;i<10;++i)
-        numOfStair = (numOfStair + lookForStairDigit(n,i)) % MOD;
+        numOfStair = (numOfStair%MOD + lookForStairDigit(n,i)%MOD) % MOD;
 
     return numOfStair;
 }
