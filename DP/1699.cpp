@@ -1,6 +1,6 @@
 /*
 FIXME: 무조건 큰 수를 취하는게 능사는 아님. 그렇다면 어떻게 해야할까?????
-다 해봐야지 뭐, greedy 가 안되면 brute force 밖에 내가 할 줄 아는게 더있음???
+DONE:다 해봐야지 뭐, greedy 가 안되면 brute force 밖에 내가 할 줄 아는게 더있음???
 */
 #include <iostream>
 #include <cstring>
