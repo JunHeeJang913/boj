@@ -1,35 +1,41 @@
 #include <iostream>
 #include <cstring>
+#include <string>
 
 using namespace std;
 
 const int MOD = 1000000;
+int n;
 int cache[5001];
+int password[5001];
 
-
-long long numberCase(int pw, int n){
-    //base case;
-    if(1 <= pw && pw <= 10) return 1;
-    if(11 <= pw && pw <= 26) return 2;
-    //memoization
-    //FIXME:
-    int & ret = cache[10];
-    if(ret != -1) return ret;
-    if((pw % 10 == 0) && ((pw%10)%10 == 0 || (pw%10)%10 >= 3)) return 0;
-    if(pw % 100 > 26) return ret = numberCase(pw/10,n);
-    else return ret = numberCase(pw/10,n) + numberCase(pw/100,n);
+int numOfDecoding(void){
+    cache[0] = 1; //0
+    for (int i = 1; i <= n; i++){
+        //A~I로 인지하였을 경우
+        if (password[i] >= 1 && password[i] <= 9)
+                cache[i] = (cache[i - 1] + cache[i]) % MOD;
+        if (i == 1)
+                continue;
+        //J~Z로 인지하였을 경우
+        int temp = password[i] + password[i - 1] * 10;
+        if (10 <= temp && temp <= 26)
+                cache[i] = (cache[i - 2] + cache[i]) % MOD;
+    }
+    return cache[n];
 }
 
 int main(void){
-    int pw;
-    cin >> pw;
-    static int password[5001];
-    int n=0;
-    for(int i = 1; pw > 0; pw /= 10, ++i){
-        password[i] = pw % 10;
-        ++n;
+    string secret;
+    cin >> secret;
+    n = secret.length();
+    for(int i = 0; i < n; ++i){
+        password[i+1] = secret[i] - '0';
     }
-
-    memset(cache, -1, sizeof(cache));
-    cout << numberCase(pw, n);
+    if(secret[0]=='0')
+        cout << 0 << endl;
+    else{
+        cout << numOfDecoding() << endl;
+    }
+    return 0;
 }
