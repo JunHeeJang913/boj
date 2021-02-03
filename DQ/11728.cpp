@@ -19,30 +19,28 @@ void printVector(const vector<int> & v){
 }
 
 void merge(vector<int>& a, vector<int>& b,vector<int>& s){
-    vector<int>::iterator ita, itb;
-    ita = a.begin(); 
-    itb = b.begin();
+    int idx_a = 0, idx_b = 0;
     s.reserve(n+m);
 
-    while(ita != a.end() && itb != b.end()){
-        if(*ita > *itb){
-            s.push_back(*itb);
-            ++itb;
+    while((idx_a < n) && (idx_b < m)){
+        if(a[idx_a] > b[idx_b]){
+            s.push_back(b[idx_b]);
+            ++idx_b;
         } else {
-            s.push_back(*ita);
-            ++ita;
+            s.push_back(a[idx_a]);
+            ++idx_a;
         }
     }
 
-    if(ita != a.end()){
-        while(ita != a.end()){
-            s.push_back(*ita);
-            ++ita;
+    if(idx_a < n){
+        while(idx_a < n){
+            s.push_back(a[idx_a]);
+            ++idx_a;
         }
     } else {
-        while(itb != b.end()){
-            s.push_back(*itb);
-            ++itb;
+        while(idx_b < m){
+            s.push_back(b[idx_b]);
+            ++idx_b;
         }
     }
 }
@@ -60,6 +58,11 @@ void input(vector<int>& a, vector<int>& b){
 }
 
 int main(void){
+    ios_base::sync_with_stdio(0); 
+    cin.tie(0); 
+    cout.tie(0);
+
+    
     vector<int> A;
     vector<int> B;
     input(A,B);
@@ -71,3 +74,9 @@ int main(void){
 
     return 0;
 }
+/*
+실행시간 문제가 있었다.
+cin, cout 문제
+https://eine.tistory.com/entry/CC-%EC%9E%85%EC%B6%9C%EB%A0%A5-%EB%B0%A9%EB%B2%95%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%86%8D%EB%8F%84-%EC%A0%95%EB%A6%AC
+참고.
+*/
