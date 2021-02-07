@@ -23,11 +23,8 @@ void merge(int left, int right){
         }
     }
 
-    int temp;
-    if(i < mid) temp = i;
-    else temp = j;
-
-    while(k <= right) seq2[k++] = seq[temp++];
+    while(i <= mid) seq2[k++] = seq[i++];
+    while(j <= right) seq2[k++] = seq[j++];
 
     for(int i = left; i <= right; ++i) seq[i] = seq2[i];
 }
