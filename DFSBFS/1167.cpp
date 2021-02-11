@@ -10,7 +10,8 @@ const int MAX = 100001;
 int V;
 vector<bool> visited;
 vector<pair<int, int> > tree[MAX];
-vector<int> length;
+int diameter = 0;
+int endPoint;
 
 void init(){
     cin >> V;
@@ -27,22 +28,13 @@ void init(){
             tree[node].push_back(make_pair(adj, length));   //중복해서 입력되므로 굳이 노드 위치 바꿀 필요 없을 듯.
         }
     }
-    /* 트리 확인
-    for(int y = 1; y < V+1; ++y){
-        for(int x = 0; x < tree[y].size(); ++x){
-            cout << tree[y][x].first;
-            cout << " : " ;
-            cout << tree[y][x].second <<", ";
-        }
-        cout << endl;
-    }*/
 }
-
+/*
 int getDiameter(){
     sort(length.begin(), length.end(), greater<int>());
     return length[0] + length[1];
 }
-
+/*
 void dfs(int here, int & len){
     visited[here] = true;
     for(int i = 0; i < tree[here].size(); ++i){
@@ -53,8 +45,8 @@ void dfs(int here, int & len){
             dfs(there, len);
         }
     }
-}
-
+}*/
+/*
 void bfs(int start, int & len){
     queue<int> q;
     q.push(start);
@@ -92,7 +84,23 @@ void solve(){
     }    
     int diameter = getDiameter();
     cout<< diameter;
-}
+}*/
+
+void dfs(int here, int cost){
+    if(visited[here] == true) return;
+
+    visited[here] = true;
+
+    if(diameter < cost){
+        diameter = cost;
+        endPoint = here;
+    }
+
+    for(int i = 0; i < tree[here].size(); ++i){
+        pair<int,int> & there = tree[here][i];
+        dfs(there.first, cost + there.second);
+    }
+}   
 
 int main(void){
     init();
@@ -100,6 +108,12 @@ int main(void){
         cout << tree[1][0].second;
         return 0;
     }    
-    solve();
+    dfs(1,0);
+    visited = vector<bool>(V+1, false);
+    diameter = 0;
+    dfs(endPoint, 0);
+
+
+    cout << diameter;
     return 0;
 }
