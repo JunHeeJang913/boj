@@ -7,7 +7,7 @@ long long numOfSwap = 0;
 
 vector<int> seq;
 vector<int> seq2;
-
+/*
 void merge(int left, int right){
     int mid = (left+right) / 2;
 
@@ -36,7 +36,7 @@ void mergeSort(int left, int right){
         mergeSort(mid+1, right);
         merge(left,right);
     }
-}
+}*/
 
 /*
 void bubSort(){
@@ -52,6 +52,27 @@ void bubSort(){
     }
 }*/
 
+long long func(int start, int end){
+    if(start == end) return 0;
+
+    int mid = (start + end) /2;
+
+    long long result = func(start, mid) + func(mid+1, end);
+
+    int i = start; int j = mid + 1; int idx = 0;
+    while(i <= mid || j <= end){
+        if(i <= mid && ( j > end || seq[i] <= seq[j]))
+            seq2[idx++] = seq[i++];
+        else{
+            result += (mid - i + 1) * 1LL;
+            seq2[idx++] = seq[j++];
+        }
+    }
+    for(int i = start; i <= end; ++i)
+        seq[i] = seq2[i-start];
+    return result;
+}
+
 int main(void){
     cin >> n;
     seq.reserve(n);
@@ -59,7 +80,7 @@ int main(void){
     for(int i = 0; i < n; ++i){
         cin >> seq[i];
     }
-    mergeSort(0, n-1);
+    numOfSwap = func(0, n-1);
 
     cout << numOfSwap;
 }
